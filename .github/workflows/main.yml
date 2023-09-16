@@ -29,7 +29,7 @@ jobs:
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git add NiceGost.deb README.md
-            git commit -m "Update NiceGost on $(TZ='Asia/Shanghai' date "+%Y/%m/%d %H:%M:%S")"
+            git commit -m "Update NiceGost on $(TZ='Asia/Singapore' date "+%Y/%m/%d %H:%M:%S")"
             git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/${{github.repository}}.git
             git push origin main
           else
