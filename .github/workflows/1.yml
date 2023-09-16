@@ -1,0 +1,44 @@
+name: Update
+
+on:
+  schedule:
+    - cron: '0 20 * * 0'
+  workflow_dispatch:
+
+jobs:
+  run_script:
+    runs-on: ubuntu-20.04
+    name: Run
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4.0.0
+
+      - name: Run NiceGost Update
+        run: |
+          sudo chmod +x NiceGost.sh
+          ./NiceGost.sh
+  
+      - name: Check for cloudflared-arm
+        run: |
+          if [ -e cloudflared-arm ]; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add NiceGost.deb README.md
+            git commit -m "Update NiceGost on $(TZ='Asia/Singapore' date "+%Y/%m/%d %H:%M:%S")"
+            git push origin main
+            latest_version=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest | grep '"tag_name":' | cut -d '"' -f 4)
+            MESSAGE="NiceGost has been updated to version $latest_version."
+          else
+            MESSAGE="NiceGost doesn't need an update."
+          fi
+          
+      - name: Send Telegram Notification
+        if: always()
+        run: |
+          URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
+          curl -s -X POST $URL -d chat_id=$TELEGRAM_CHAT_ID -d text="$MESSAGE"
