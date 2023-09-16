@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-20.04
     name: Run
     env:
-      GITHUB_TOKEN: ${{ GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
     steps:
       - name: Checkout Repository
@@ -28,7 +28,7 @@ jobs:
             git config --local user.name "GitHub Action"
             git add NiceGost.deb README.md
             git commit -m "Update NiceGost on $(date "+%Y/%m/%d %H:%M:%S")"
-            git remote set-url origin https://x-access-token:${{ GITHUB_TOKEN }}@github.com/${{github.repository}}.git
+            git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/${{github.repository}}.git
             git push origin main
           else
             echo "cloudflared-arm file does not exist, won't perform commit operation."
