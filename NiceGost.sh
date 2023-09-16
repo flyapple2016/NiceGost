@@ -1,30 +1,6 @@
 #!/usr/bin/env bash
 
 GO_VERSION="1.20.8"
-TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
-
-sendMessage() {
-
-if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
-  echo "Telegram机器人令牌或聊天ID未设置。请确保设置了这些环境变量。"
-  exit 1
-fi
-
-MESSAGE="这是一条来自GitHub Actions的测试消息。"
-URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
-curl -s -X POST "$URL" -d "chat_id=$TELEGRAM_CHAT_ID" -d "text=$MESSAGE"
-
-if [ $? -eq 0 ]; then
-  echo "消息已成功发送到Telegram！"
-else
-  echo "发送消息到Telegram失败。"
-fi
-
-  #MESSAGE="NiceGost has been updated to version $latest_version."
-  #URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
-  #curl -s -X POST "$URL" -d "chat_id=$TELEGRAM_CHAT_ID" -d "text=$MESSAGE"
-}
 
 updateNiceGost() {
   if [ "$latest_version" != "$current_version" ]; then
@@ -80,7 +56,7 @@ EOF
     rm -rf "$PACKAGE_DIR"
 
     echo "Package $PACKAGE_NAME.deb created successfully."
-    sendMessage
+    
   else
     echo "Remote Cloudflared version is up to date. No need to download and compile NiceGost."
   fi
@@ -88,7 +64,6 @@ EOF
 
 latest_release_info=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest)
 latest_version=$(echo "$latest_release_info" | grep '"tag_name":' | cut -d '"' -f 4)
-
 current_version=$(curl -s "https://raw.githubusercontent.com/flyapple2016/NiceGost/main/README.md" | grep 'Latest Version:' | awk '{print $NF}')
 
 updateNiceGost
