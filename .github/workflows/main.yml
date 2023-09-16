@@ -1,0 +1,35 @@
+name: Update NiceGost
+
+on:
+  schedule:
+    - cron: '0 20 * * 0'
+  workflow_dispatch:
+
+jobs:
+  run_script:
+    runs-on: ubuntu-20.04
+    name: Run
+    env:
+      GITHUB_TOKEN: ${{ GITHUB_TOKEN }}
+      
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4.0.0
+
+      - name: Run Script
+        run: |
+          sudo chmod +x NiceGost.sh
+          sudo bash NiceGost.sh
+
+      - name: Check for cloudflared-arm
+        run: |
+          if [ -e cloudflared-arm ]; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add NiceGost.deb README.md
+            git commit -m "Update NiceGost on $(date "+%Y/%m/%d %H:%M:%S")"
+            git remote set-url origin https://x-access-token:${{ GITHUB_TOKEN }}@github.com/${{github.repository}}.git
+            git push origin main
+          else
+            echo "cloudflared-arm file does not exist, won't perform commit operation."
+          fi
