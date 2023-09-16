@@ -5,9 +5,25 @@ TELEGRAM_BOT_TOKEN="$TELEGRAM_BOT_TOKEN"
 TELEGRAM_CHAT_ID="$TELEGRAM_CHAT_ID"
 
 sendMessage() {
-  MESSAGE="NiceGost has been updated to version $latest_version."
-  URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
-  curl -s -X POST "$URL" -d "chat_id=$TELEGRAM_CHAT_ID" -d "text=$MESSAGE"
+
+if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+  echo "Telegram机器人令牌或聊天ID未设置。请确保设置了这些环境变量。"
+  exit 1
+fi
+
+MESSAGE="这是一条来自GitHub Actions的测试消息。"
+URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
+curl -s -X POST "$URL" -d "chat_id=$TELEGRAM_CHAT_ID" -d "text=$MESSAGE"
+
+if [ $? -eq 0 ]; then
+  echo "消息已成功发送到Telegram！"
+else
+  echo "发送消息到Telegram失败。"
+fi
+
+  #MESSAGE="NiceGost has been updated to version $latest_version."
+  #URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
+  #curl -s -X POST "$URL" -d "chat_id=$TELEGRAM_CHAT_ID" -d "text=$MESSAGE"
 }
 
 updateNiceGost() {
