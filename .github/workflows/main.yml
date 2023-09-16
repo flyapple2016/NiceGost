@@ -16,8 +16,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4.0.0
 
-      - name: Run Script
-        run: sudo chmod +x NiceGost.sh && sudo bash NiceGost.sh
+      - name: Run Script && MESSAGE
+        run: |
+          sudo chmod +x NiceGost.sh && sudo bash NiceGost.sh
+          latest_release_info=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest)
+          latest_version=$(echo "$latest_release_info" | grep '"tag_name":' | cut -d '"' -f 4)
+          MESSAGE="NiceGost has been updated to version $latest_version."
+          URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
+          curl -s -X POST $URL -d chat_id=$TELEGRAM_CHAT_ID -d text="$MESSAGE"
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
