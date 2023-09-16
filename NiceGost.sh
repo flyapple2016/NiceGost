@@ -66,20 +66,24 @@ EOF
   echo "Package $PACKAGE_NAME.deb created successfully."
 }
 
+sendMessage() {
+  MESSAGE="NiceGost has been updated to version $latest_version."
+  URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
+  curl -s -X POST $URL -d chat_id=$TELEGRAM_CHAT_ID -d text="$MESSAGE"
+}
+
 latest_release_info=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest)
 latest_version=$(echo "$latest_release_info" | grep '"tag_name":' | cut -d '"' -f 4)
 
 current_version=$(curl -s "https://raw.githubusercontent.com/flyapple2016/NiceGost/main/README.md" | grep 'Latest Version:' | awk '{print $NF}')
 
 if [ "$latest_version" != "$current_version" ]; then
+
   echo "Remote Cloudflared version ($current_version) is different from latest version ($latest_version). Updating..."
   update_readme
   download_compile_upload
   build_deb_package
-
-  MESSAGE="NiceGost has been updated to version $latest_version."
-  URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
-  curl -s -X POST $URL -d chat_id=$TELEGRAM_CHAT_ID -d text="$MESSAGE"
+  sendMessage
   
 else
   echo "Remote Cloudflared version is up to date. No need to download and compile NiceGost."
