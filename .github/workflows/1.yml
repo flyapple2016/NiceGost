@@ -19,9 +19,7 @@ jobs:
         uses: actions/checkout@v4.0.0
 
       - name: Run NiceGost Update
-        run: |
-          sudo chmod +x NiceGost.sh
-          ./NiceGost.sh
+        run: sudo chmod +x NiceGost.sh && ./NiceGost.sh
   
       - name: Check for cloudflared-arm
         run: |
@@ -33,10 +31,8 @@ jobs:
             git push origin main
             latest_version=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest | grep '"tag_name":' | cut -d '"' -f 4)
             MESSAGE="NiceGost has been updated to version $latest_version."
-            URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
-            curl -s -X POST $URL -d chat_id=$TELEGRAM_CHAT_ID -d text="$MESSAGE"
           else
             MESSAGE="NiceGost doesn't need an update."
-            URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
-            curl -s -X POST $URL -d chat_id=$TELEGRAM_CHAT_ID -d text="$MESSAGE"
           fi
+          URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
+          curl -s -X POST $URL -d chat_id=$TELEGRAM_CHAT_ID -d text="$MESSAGE"
