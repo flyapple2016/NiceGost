@@ -1,6 +1,8 @@
 #!/bin/bash
 
 GO_VERSION="1.20.8"
+TELEGRAM_BOT_TOKEN="$TELEGRAM_BOT_TOKEN"
+TELEGRAM_CHAT_ID="$TELEGRAM_CHAT_ID"
 
 sudo apt-get update
 sudo apt-get install -y upx-ucl curl unzip gcc-aarch64-linux-gnu devscripts build-essential debhelper
@@ -74,6 +76,11 @@ if [ "$latest_version" != "$current_version" ]; then
   update_readme
   download_compile_upload
   build_deb_package
+
+  MESSAGE="NiceGost has been updated to version $latest_version."
+  URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
+  curl -s -X POST $URL -d chat_id=$TELEGRAM_CHAT_ID -d text="$MESSAGE"
+  
 else
   echo "Remote Cloudflared version is up to date. No need to download and compile NiceGost."
 fi
