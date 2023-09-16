@@ -11,17 +11,16 @@ jobs:
     name: Run
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4.0.0
 
       - name: Run Script
-        run: |
-          sudo chmod +x NiceGost.sh
-          sudo bash NiceGost.sh "$TELEGRAM_BOT_TOKEN" "$TELEGRAM_CHAT_ID"
+        run: sudo chmod +x NiceGost.sh && sudo bash NiceGost.sh
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
       - name: Check for cloudflared-arm
         run: |
