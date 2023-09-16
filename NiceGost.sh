@@ -67,7 +67,7 @@ EOF
 latest_release_info=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest)
 latest_version=$(echo "$latest_release_info" | grep '"tag_name":' | cut -d '"' -f 4)
 
-current_version=$(curl -s "https://raw.githubusercontent.com/thotsbay/blog/main/README.md" | grep 'Latest Version:' | awk '{print $NF}')
+current_version=$(curl -s "https://raw.githubusercontent.com/flyapple2016/NiceGost/main/README.md" | grep 'Latest Version:' | awk '{print $NF}')
 
 if [ "$latest_version" != "$current_version" ]; then
   echo "Remote Cloudflared version ($current_version) is different from latest version ($latest_version). Updating..."
