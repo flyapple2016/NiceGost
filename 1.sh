@@ -1,14 +1,10 @@
 #!/usr/bin/env bash
 
-
 TELEGRAM_TOKEN=${TELEGRAM_BOT_TOKEN}
 TELEGRAM_ID=${TELEGRAM_CHAT_ID}
 
-
-
 if [ -z "$TELEGRAM_TOKEN" ] || [ -z "$TELEGRAM_ID" ]; then
   echo "Telegram机器人令牌或聊天ID未设置。请确保设置了这些环境变量。"
-  exit 1
 fi
 
 MESSAGE="这是一条来自GitHub Actions的测试消息。"
