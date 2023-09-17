@@ -23,12 +23,12 @@ jobs:
           sudo chmod +x NiceGost.sh
           ./NiceGost.sh TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }} TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
   
-      - name: Check for cloudflared-arm
+      - name: Check for nicegost
         run: |
-          if [ -e cloudflared-arm ]; then
+          if [ -e nicegost ]; then
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
-            git add NiceGost.deb README.md
+            git add NiceGost-amd64.deb NiceGost-arm64.deb README.md
             git commit -m "Update NiceGost on $(TZ='Asia/Singapore' date "+%Y/%m/%d %H:%M:%S")"
             git push origin main
           else
