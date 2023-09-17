@@ -1,0 +1,24 @@
+name: 1
+
+on:
+  schedule:
+    - cron: '0 20 * * 0'
+  workflow_dispatch:
+
+jobs:
+  run_script:
+    runs-on: ubuntu-20.04
+    name: Run
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4.0.0
+
+      - name: Run NiceGost Update
+        run: |
+          sudo chmod +x 1.sh
+          ./1.sh TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
