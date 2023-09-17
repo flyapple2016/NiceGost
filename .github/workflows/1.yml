@@ -21,4 +21,4 @@ jobs:
       - name: Run NiceGost Update
         run: |
           sudo chmod +x 1.sh
-          ./1.sh TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
+          ./1.sh TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }} TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }} 
