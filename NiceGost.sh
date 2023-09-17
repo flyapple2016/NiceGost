@@ -65,17 +65,13 @@ latest_version=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/rel
 current_version=$(curl -s "https://raw.githubusercontent.com/flyapple2016/NiceGost/main/README.md" | grep 'Latest Version:' | awk '{print $NF}')
 
 if [ "$latest_version" != "$current_version" ]; then
-
-  echo "Remote Cloudflared version ($current_version) is different from latest version ($latest_version). Updating..."
   sudo apt-get update
   sudo apt-get install -y upx-ucl curl unzip gcc-aarch64-linux-gnu devscripts build-essential debhelper
   update_readme
   download_compile_upload
   build_deb_package
   MESSAGE="NiceGost has been updated to version $latest_version."
-
 else
-  echo "Remote Cloudflared version is up to date. No need to download and compile NiceGost."
   MESSAGE="NiceGost doesn't need an update."
 fi
 
