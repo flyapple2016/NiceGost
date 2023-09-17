@@ -33,11 +33,11 @@ download_compile_upload() {
 build_deb_package() {
   PACKAGE_NAME="NiceGost"
   PACKAGE_VERSION="$latest_version"
-  PACKAGE_ARCH="amd64"
   MAINTAINER="NiceGost <NiceGost@email.com>"
   DESCRIPTION="NiceGost 2023"
 
-  PACKAGE_DIR="$PACKAGE_NAME-$PACKAGE_VERSION"
+  PACKAGE_ARCH="amd64"
+  PACKAGE_DIR="$PACKAGE_NAME-$PACKAGE_VERSION-$PACKAGE_ARCH"
   DEBIAN_DIR="$PACKAGE_DIR/DEBIAN"
   INSTALL_DIR="$PACKAGE_DIR/usr/bin"
 
@@ -55,10 +55,36 @@ Maintainer: $MAINTAINER
 Description: $DESCRIPTION
 EOF
 
-  dpkg-deb --build "$PACKAGE_DIR" "$PACKAGE_NAME.deb"
+  dpkg-deb --build "$PACKAGE_DIR" "$PACKAGE_NAME-$PACKAGE_ARCH.deb"
   rm -rf "$PACKAGE_DIR"
+  rm -rf nicegost
+  echo "Package $PACKAGE_NAME-$PACKAGE_VERSION-$PACKAGE_ARCH.deb created successfully."
 
-  echo "Package $PACKAGE_NAME.deb created successfully."
+  mv nicegost-arm nicegost
+
+  PACKAGE_ARCH="arm64"
+  PACKAGE_DIR="$PACKAGE_NAME-$PACKAGE_VERSION-$PACKAGE_ARCH"
+  DEBIAN_DIR="$PACKAGE_DIR/DEBIAN"
+  INSTALL_DIR="$PACKAGE_DIR/usr/bin"
+
+  mkdir -p "$DEBIAN_DIR"
+  chmod 0755 "$DEBIAN_DIR"
+
+  mkdir -p "$INSTALL_DIR"
+  cp nicegost "$INSTALL_DIR"
+
+  cat > "$DEBIAN_DIR/control" <<EOF
+Package: $PACKAGE_NAME
+Version: $PACKAGE_VERSION
+Architecture: $PACKAGE_ARCH
+Maintainer: $MAINTAINER
+Description: $DESCRIPTION
+EOF
+
+  dpkg-deb --build "$PACKAGE_DIR" "$PACKAGE_NAME-$PACKAGE_ARCH.deb"
+  rm -rf "$PACKAGE_DIR"
+  rm -rf nicegost
+  echo "Package $PACKAGE_NAME-$PACKAGE_VERSION-$PACKAGE_ARCH.deb created successfully."
 }
 
 latest_version=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest | grep '"tag_name":' | cut -d '"' -f 4)
