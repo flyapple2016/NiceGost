@@ -19,14 +19,14 @@ download_compile_upload() {
   unzip "$latest_version.zip"
   cd "cloudflared-$latest_version"
 
-  go build -o cloudflared-amd -trimpath -ldflags "-s -w -buildid=" ./cmd/cloudflared
-  GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o cloudflared-arm -trimpath -ldflags "-s -w -buildid=" ./cmd/cloudflared
+  go build -o nicegost -trimpath -ldflags "-s -w -buildid=" ./cmd/cloudflared
+  GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o nicegost-arm -trimpath -ldflags "-s -w -buildid=" ./cmd/cloudflared
 
-  sudo chmod a+x cloudflared-amd cloudflared-arm
-  upx -o nicegost cloudflared-amd
-  sudo chmod a+x nicegost
+  sudo chmod a+x nicegost nicegost-arm
+  upx nicegost nicegost-arm
+  sudo chmod a+x nicegost nicegost-arm
 
-  mv cloudflared-amd cloudflared-arm nicegost ..
+  mv nicegost nicegost-arm ..
   cd ..
 }
 
