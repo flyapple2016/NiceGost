@@ -31,10 +31,6 @@ jobs:
             git add NiceGost.deb README.md
             git commit -m "Update NiceGost on $(TZ='Asia/Singapore' date "+%Y/%m/%d %H:%M:%S")"
             git push origin main
-            latest_version=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest | grep '"tag_name":' | cut -d '"' -f 4)
-            MESSAGE="NiceGost has been updated to version $latest_version."
           else
-            MESSAGE="NiceGost doesn't need an update."
+            echo "NiceGost doesn't need an update."
           fi
-          URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
-          curl -s -X POST $URL -d chat_id=$TELEGRAM_CHAT_ID -d text="$MESSAGE" > /dev/null
