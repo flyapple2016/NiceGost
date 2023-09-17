@@ -21,7 +21,7 @@ jobs:
       - name: Run NiceGost Update
         run: |
           sudo chmod +x NiceGost.sh
-          ./NiceGost.sh
+          ./NiceGost.sh TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }} TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
   
       - name: Check for cloudflared-arm
         run: |
