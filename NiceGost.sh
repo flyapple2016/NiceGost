@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GO_VERSION="1.20.13"
+GO_VERSION="1.21.6"
 
 update_readme() {
   cat <<EOL > README.md
