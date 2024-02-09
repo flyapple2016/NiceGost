@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#GO_VERSION="1.21.6"
-
 update_readme() {
   cat <<EOL > README.md
 Latest Version: $latest_version
@@ -9,11 +7,6 @@ EOL
 }
 
 download_compile_upload() {
-#  wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
-#  sudo rm -rf /usr/local/go
-# sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
-#  export PATH=$PATH:/usr/local/go/bin
-
   download_url="https://github.com/cloudflare/cloudflared/archive/$latest_version.zip"
   curl -LO "$download_url"
   unzip "$latest_version.zip"
