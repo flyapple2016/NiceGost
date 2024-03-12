@@ -19,7 +19,7 @@ jobs:
       - name: Run Update
         run: |
           sudo chmod +x sub.sh
-          ./NiceGost.sh
+          ./sub.sh
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add encoded.txt
