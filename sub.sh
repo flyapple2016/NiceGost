@@ -16,8 +16,10 @@ while IFS= read -r text; do
     result=$(echo "$template" | sed "s/{{ip}}/$ip/g; s/{{port}}/$port/g; s/{{comment}}/$comment/g")
     echo "$result" >> "$output_file"
 done <<< "$content"
+
 addresses=$(curl -s https://addressesapi.090227.xyz/cmcc)
 ports=(443 2053 2083 2087 2096 8443)
+
 append_to_file() {
     while IFS='#' read -r address comment; do
         ip=$(echo "$address" | cut -d':' -f1)
@@ -27,4 +29,5 @@ append_to_file() {
         echo "$new_template" >> "$output_file"
     done <<< "$addresses"
 }
+
 append_to_file
