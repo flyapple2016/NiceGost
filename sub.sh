@@ -17,3 +17,6 @@ while IFS= read -r text; do
     echo "$result" >> "$output_file"
 done <<< "$content"
 echo "处理完成，结果已写入 $output_file 文件。"
+
+
+# https://addressesapi.090227.xyz/cmcc
