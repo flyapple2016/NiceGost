@@ -10,7 +10,7 @@ while IFS= read -r text; do
     ip_port=$(echo "$text" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:[0-9]+')
     ip=$(echo "$ip_port" | cut -d ':' -f 1)
     port=$(echo "$ip_port" | cut -d ':' -f 2)
-    comment=$(echo "$text" | grep -oE '#[^#]+ | sed 's/#//')
+    comment=$(echo "$text" | cut -d '#' -f 2)
     result=$(echo "$template" | sed "s/{{ip}}/$ip/g; s/{{port}}/$port/g; s/{{comment}}/$comment/g")
     echo "$result" >> "$output_file"
 done <<< "$curl_output"
