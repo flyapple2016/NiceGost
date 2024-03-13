@@ -1,0 +1,27 @@
+name: Update sub
+
+on:
+#  schedule:
+#   - cron: '0 */4 * * *'
+  workflow_dispatch:
+
+jobs:
+  run_script:
+    runs-on: ubuntu-22.04
+    name: Run
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4.1.1
+
+      - name: Run Update
+        run: |
+          sudo chmod +x sub.sh
+          ./sub.sh
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add encoded.txt
+          git commit -m "Update NiceGost on $(TZ='Asia/Singapore' date "+%Y/%m/%d %H:%M:%S")"
+          git push origin main --force
