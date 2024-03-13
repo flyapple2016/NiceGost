@@ -3,7 +3,7 @@
 sni_host="zimbabwe-prefers-discounted-oldest.trycloudflare.com"
 template="vless://3a9667dc-a684-1c1f-bdf0-c3098e8456ff@{{ip}}:{{port}}?encryption=none&security=xtls&flow=xtls-rprx-vision&sni=$sni_host&type=ws&host=$sni_host&path=/TerrariaSkeletron002?ed=2048#{{comment}}"
 curl_output=$(curl https://sub.cfno1.eu.org/sub | base64 -d | sed '2,3d')
-output_file="modified_info.txt"
+output_file="encoded.txt"
 header=$(echo "$curl_output" | sed -n '1p')
 content=$(echo "$curl_output" | sed '1d')
 > "$output_file"
