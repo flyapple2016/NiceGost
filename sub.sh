@@ -1,12 +1,10 @@
 #!/bin/bash
 
 set -e
-
 sni_host="zimbabwe-prefers-discounted-oldest.trycloudflare.com"
 template1="vless://3a9667dc-a684-1c1f-bdf0-c3098e8456ff@{{ip}}:{{port}}?encryption=none&security=xtls&flow=xtls-rprx-vision&sni=$sni_host&type=ws&host=$sni_host&path=/TerrariaSkeletron002?ed=2048#{{comment}}"
 template2="vless://3a9667dc-a684-1c1f-bdf0-c3098e8456ff@{{ip}}:{{port}}?encryption=none&security=xtls&flow=xtls-rprx-vision&sni=$sni_host&type=ws&host=$sni_host&path=/TerrariaSkeletron002?ed=2048#BR-{{comment}}"
-template3_prefix="vmess://"
-template3_suffix=",\"add\":\"{{ip}}\",\"aid\":\"0\",\"alpn\":\"\",\"host\":\"$sni_host\",\"id\":\"3a9667dc-a684-1c1f-bdf0-c3098e8456ff\",\"net\":\"ws\",\"path\":\"/TerrariaSkeletron003?ed=2048\",\"port\":\"{{port}}\",\"ps\":\"BR-CMCC\",\"scy\":\"auto\",\"sni\":\"\",\"tls\":\"\",\"type\":\"\",\"v\":\"2\""
+template3="{\"add\":\"{{ip}}\",\"aid\":\"0\",\"alpn\":\"\",\"host\":\"$sni_host\",\"id\":\"3a9667dc-a684-1c1f-bdf0-c3098e8456ff\",\"net\":\"ws\",\"path\":\"/TerrariaSkeletron003?ed=2048\",\"port\":\"{{port}}\",\"ps\":\"BR-CMCC\",\"scy\":\"auto\",\"sni\":\"\",\"tls\":\"\",\"type\":\"\",\"v\":\"2\"}"
 
 curl_output=$(curl https://sub.cfno1.eu.org/sub | base64 -d | sed '2,3d')
 output_file="base64.txt"
@@ -35,12 +33,12 @@ append_to_file() {
         new_template2=$(echo "$template2" | sed "s/{{ip}}/$ip/g; s/{{port}}/$port1/g; s/{{comment}}/$comment/g")
         echo "$new_template2" >> "$output_file"
     done <<< "$addresses"
-
     while IFS='#' read -r address comment; do
         ip=$(echo "$address" | cut -d':' -f1)
         port2=${ports2[$RANDOM % ${#ports2[@]}]}
-        new_template3="${template3_prefix}$(echo "$template3_suffix" | sed "s/{{ip}}/$ip/g; s/{{port}}/$port2/g; s/{{comment}}/$comment/g")"
-        echo "$new_template3" | base64 | tr -d '\n' >> "$output_file"
+        new_template3_json=$(echo "$template3" | sed "s/{{ip}}/$ip/g; s/{{port}}/$port2/g; s/{{comment}}/$comment/g")
+        new_template3_base64=$(echo -n "$new_template3_json" | base64)
+        echo -n "vmess://$new_template3_base64" | tr -d '\n' >> "$output_file"
         echo >> "$output_file"
     done <<< "$addresses"
 }
