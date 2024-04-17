@@ -2,7 +2,7 @@ name: Update CF
 
 on:
   schedule:
-    - cron: '0 11 * * 1'
+    - cron: '0 11 */15 * 1'
   workflow_dispatch:
 
 jobs:
