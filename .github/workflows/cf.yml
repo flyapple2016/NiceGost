@@ -18,12 +18,12 @@ jobs:
 
       - name: Run Update
         run: |
-          sudo chmod +x CF.sh && ./CF.sh
+          sudo chmod +x CF.sh && ./CF.sh > /dev/null 2>&1
   
       - name: Check
         run: |
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
-            git add IP4-AS209242-ISO
+            git add IP4-AS13335-CIDR IP6-AS13335-CIDR IP4-AS209242-CIDR IP6-AS209242-CIDR IP4-AS209242-ISO
             git commit -m "Update CF on $(TZ='Asia/Singapore' date "+%Y/%m/%d %H:%M:%S")"
             git push origin main
