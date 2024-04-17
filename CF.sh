@@ -16,8 +16,10 @@ for asn in "${asns[@]}"; do
         asn=$(echo "$line" | awk '{print $2}')
 
         if [[ "$prefix" == *":"* ]]; then
+            > "IP6-AS$asn-CIDR"
             echo "$prefix" >> "IP6-AS$asn-CIDR"
         else
+            > "IP4-AS$asn-CIDR"
             echo "$prefix" >> "IP4-AS$asn-CIDR"
         fi
     done < "tmp-$asn.txt"
