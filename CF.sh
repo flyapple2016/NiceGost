@@ -7,6 +7,7 @@ sleep 3
 
 asns=("13335" "209242")
 map_file="ISO2"
+rm -f IP4-AS13335-CIDR IP6-AS13335-CIDR IP4-AS209242-CIDR IP6-AS209242-CIDR IP4-AS209242-ISO
 
 for asn in "${asns[@]}"; do
     curl -A 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.100 Safari/537.36' "https://bgp.tools/table.txt" -s | grep "$asn" > "tmp-$asn.txt"
@@ -16,10 +17,8 @@ for asn in "${asns[@]}"; do
         asn=$(echo "$line" | awk '{print $2}')
 
         if [[ "$prefix" == *":"* ]]; then
-            > "IP6-AS$asn-CIDR"
             echo "$prefix" >> "IP6-AS$asn-CIDR"
         else
-            > "IP4-AS$asn-CIDR"
             echo "$prefix" >> "IP4-AS$asn-CIDR"
         fi
     done < "tmp-$asn.txt"
@@ -28,7 +27,7 @@ for asn in "${asns[@]}"; do
 done
 
 sleep 3
-> IP4-AS209242-ISO
+
 while read -r line; do
     ip=$(echo $line | cut -d ' ' -f 1 | cut -d '/' -f 1)
     result=$(mmdblookup --file GeoLite2-Country.mmdb --ip $ip country iso_code)
