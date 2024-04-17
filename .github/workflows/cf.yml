@@ -18,8 +18,7 @@ jobs:
 
       - name: Run Update
         run: |
-          sudo chmod +x CF.sh
-          ./CF.sh > /dev/null 2>&1
+          sudo chmod +x CF.sh && ./CF.sh
   
       - name: Check
         run: |
