@@ -26,7 +26,7 @@ for asn in "${asns[@]}"; do
 done
 
 sleep 3
-echo "" > IP4-AS209242-ISO
+> IP4-AS209242-ISO
 while read -r line; do
     ip=$(echo $line | cut -d ' ' -f 1 | cut -d '/' -f 1)
     result=$(mmdblookup --file GeoLite2-Country.mmdb --ip $ip country iso_code)
