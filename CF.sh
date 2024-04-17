@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get update && apt-get install curl mmdb-bin
+sudo apt-get update && sudo apt-get install curl mmdb-bin
 
 curl -L -o GeoLite2-Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb > /dev/null 2>&1
 sleep 3
