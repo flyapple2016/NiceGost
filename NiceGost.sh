@@ -12,47 +12,22 @@ download_compile_upload() {
   unzip "$latest_version.zip"
   cd "cloudflared-$latest_version"
 
-  CGO_ENABLED=0 go build -o nicegost -trimpath -ldflags "-s -w -buildid=" ./cmd/cloudflared
+  CGO_ENABLED=0 go build -o nicegost-amd -trimpath -ldflags "-s -w -buildid=" ./cmd/cloudflared
   GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o nicegost-arm -trimpath -ldflags "-s -w -buildid=" ./cmd/cloudflared
 
-  sudo chmod a+x nicegost nicegost-arm
-  upx nicegost nicegost-arm
-  sudo chmod a+x nicegost nicegost-arm
+  sudo chmod a+x nicegost-amd nicegost-arm
+  upx nicegost-amd nicegost-arm
+  sudo chmod a+x nicegost-amd nicegost-arm
 
-  mv nicegost nicegost-arm ..
+  mv nicegost-amd nicegost-arm ..
   cd ..
-  cp nicegost ./nicegost/nicegost
 }
 
 build_deb_package() {
   PACKAGE_NAME="NiceGost"
   PACKAGE_VERSION="$latest_version"
   MAINTAINER="NiceGost <NiceGost@email.com>"
-  DESCRIPTION="NiceGost 2023"
-
-  PACKAGE_ARCH="amd64"
-  PACKAGE_DIR="$PACKAGE_NAME-$PACKAGE_VERSION-$PACKAGE_ARCH"
-  DEBIAN_DIR="$PACKAGE_DIR/DEBIAN"
-  INSTALL_DIR="$PACKAGE_DIR/usr/bin"
-
-  mkdir -p "$DEBIAN_DIR"
-  chmod 0755 "$DEBIAN_DIR"
-
-  mkdir -p "$INSTALL_DIR"
-  cp nicegost "$INSTALL_DIR"
-
-  cat > "$DEBIAN_DIR/control" <<EOF
-Package: $PACKAGE_NAME
-Version: $PACKAGE_VERSION
-Architecture: $PACKAGE_ARCH
-Maintainer: $MAINTAINER
-Description: $DESCRIPTION
-EOF
-
-  dpkg-deb --build "$PACKAGE_DIR" "$PACKAGE_NAME-$PACKAGE_ARCH.deb"
-  rm -rf "$PACKAGE_DIR"
-  rm -rf nicegost
-  echo "Package $PACKAGE_NAME-$PACKAGE_VERSION-$PACKAGE_ARCH.deb created successfully."
+  DESCRIPTION="NiceGost 2025"
 
   mv nicegost-arm nicegost
 
@@ -79,9 +54,30 @@ EOF
   rm -rf "$PACKAGE_DIR"
   rm -rf nicegost
   echo "Package $PACKAGE_NAME-$PACKAGE_VERSION-$PACKAGE_ARCH.deb created successfully."
-  cd nicegost
-  mv nicegost ..
-  cd ..
+  
+  PACKAGE_ARCH="amd64"
+  PACKAGE_DIR="$PACKAGE_NAME-$PACKAGE_VERSION-$PACKAGE_ARCH"
+  DEBIAN_DIR="$PACKAGE_DIR/DEBIAN"
+  INSTALL_DIR="$PACKAGE_DIR/usr/bin"
+
+  mkdir -p "$DEBIAN_DIR"
+  chmod 0755 "$DEBIAN_DIR"
+
+  mkdir -p "$INSTALL_DIR"
+  mv nicegost-amd nicegost
+  cp nicegost "$INSTALL_DIR"
+
+  cat > "$DEBIAN_DIR/control" <<EOF
+Package: $PACKAGE_NAME
+Version: $PACKAGE_VERSION
+Architecture: $PACKAGE_ARCH
+Maintainer: $MAINTAINER
+Description: $DESCRIPTION
+EOF
+
+  dpkg-deb --build "$PACKAGE_DIR" "$PACKAGE_NAME-$PACKAGE_ARCH.deb"
+  rm -rf "$PACKAGE_DIR"
+  echo "Package $PACKAGE_NAME-$PACKAGE_VERSION-$PACKAGE_ARCH.deb created successfully."
 }
 
 latest_version=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest | grep '"tag_name":' | cut -d '"' -f 4)
@@ -90,7 +86,6 @@ current_version=$(curl -s "https://raw.githubusercontent.com/flyapple2016/NiceGo
 if [ "$latest_version" != "$current_version" ]; then
   sudo apt-get update
   sudo apt-get install -y upx-ucl curl unzip gcc-aarch64-linux-gnu devscripts build-essential debhelper
-  mkdir nicegost
   update_readme
   download_compile_upload
   build_deb_package
