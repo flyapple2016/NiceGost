@@ -33,7 +33,7 @@ jobs:
           if [ -e nicegost ]; then
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
-            git add NiceGost-amd64.deb NiceGost-arm64.deb README.md
+            git add nicegost NiceGost-amd64.deb NiceGost-arm64.deb README.md
             git commit -m "Update NiceGost on $(TZ='Asia/Singapore' date "+%Y/%m/%d %H:%M:%S")"
             git push origin main --force
           else
