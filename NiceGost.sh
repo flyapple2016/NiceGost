@@ -21,6 +21,7 @@ download_compile_upload() {
 
   mv nicegost nicegost-arm ..
   cd ..
+  cp nicegost ./nicegost/nicegost
 }
 
 build_deb_package() {
@@ -76,7 +77,11 @@ EOF
 
   dpkg-deb --build "$PACKAGE_DIR" "$PACKAGE_NAME-$PACKAGE_ARCH.deb"
   rm -rf "$PACKAGE_DIR"
+  rm -rf nicegost
   echo "Package $PACKAGE_NAME-$PACKAGE_VERSION-$PACKAGE_ARCH.deb created successfully."
+  cd nicegost
+  mv nicegost ..
+  cd ..
 }
 
 latest_version=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest | grep '"tag_name":' | cut -d '"' -f 4)
@@ -85,6 +90,7 @@ current_version=$(curl -s "https://raw.githubusercontent.com/flyapple2016/NiceGo
 if [ "$latest_version" != "$current_version" ]; then
   sudo apt-get update
   sudo apt-get install -y upx-ucl curl unzip gcc-aarch64-linux-gnu devscripts build-essential debhelper
+  mkdir nicegost
   update_readme
   download_compile_upload
   build_deb_package
