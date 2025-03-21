@@ -7,18 +7,18 @@ on:
 
 jobs:
   run_script:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     name: Run
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4.1.3
+        uses: actions/checkout@v4.2.2
 
       - name: Run Update
         run: |
-          sudo chmod +x CF.sh && ./CF.sh > /dev/null 2>&1
+          sudo chmod +x CF.sh && ./CF.sh
   
       - name: Check
         run: |
