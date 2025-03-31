@@ -7,6 +7,7 @@ EOL
 }
 
 download_compile_upload() {
+  rm -f nicegost
   download_url="https://github.com/cloudflare/cloudflared/archive/$latest_version.zip"
   curl -LO "$download_url"
   unzip "$latest_version.zip"
