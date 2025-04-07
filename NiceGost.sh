@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -rf nicegost
+
 update_readme() {
   cat <<EOL > README.md
 Latest Version: $latest_version
@@ -53,7 +55,6 @@ EOF
 
   dpkg-deb --build "$PACKAGE_DIR" "$PACKAGE_NAME-$PACKAGE_ARCH.deb"
   rm -rf "$PACKAGE_DIR"
-  rm -rf nicegost
   echo "Package $PACKAGE_NAME-$PACKAGE_VERSION-$PACKAGE_ARCH.deb created successfully."
   
   PACKAGE_ARCH="amd64"
