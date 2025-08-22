@@ -1,1 +1,1 @@
-Latest Version: 2025.8.0
+Latest Version: 2025.8.1
