@@ -34,7 +34,7 @@ def merge_rules(urls):
         except Exception as e:
             continue
 
-    result = {"version": 1, "rules": [{}]}
+    result = {"version": 3, "rules": [{}]}
     obj = result["rules"][0]
     for key in merged:
         items = sorted(merged[key])
