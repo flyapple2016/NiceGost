@@ -1,9 +1,14 @@
 #!/bin/bash
 
-sudo apt-get update && sudo apt-get install curl mmdb-bin
+sudo apt-get update && sudo apt-get install curl mmdb-bin wget python3
 
+wget https://github.com/SagerNet/sing-box/releases/download/v1.12.12/sing-box_1.12.12_linux_amd64.deb > /dev/null 2>&1
+sudo dpkg -i sing-box_1.12.12_linux_amd64.deb > /dev/null 2>&1
 curl -L -o GeoLite2-Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb > /dev/null 2>&1
-sleep 3
+python3 list.py
+sleep 15
+sing-box rule-set compile --output ads.srs ads.json
+sing-box rule-set compile --output list.srs list.json
 
 asns=("13335" "209242")
 map_file="ISO2"
