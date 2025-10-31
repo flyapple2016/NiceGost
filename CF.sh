@@ -1,6 +1,7 @@
 #!/bin/bash
 
-sudo apt-get update && sudo apt-get install curl mmdb-bin wget python3
+sudo apt-get update > /dev/null 2>&1
+sudo apt-get install curl mmdb-bin wget python3 > /dev/null 2>&1
 
 wget https://github.com/SagerNet/sing-box/releases/download/v1.12.12/sing-box_1.12.12_linux_amd64.deb > /dev/null 2>&1
 sudo dpkg -i sing-box_1.12.12_linux_amd64.deb > /dev/null 2>&1
