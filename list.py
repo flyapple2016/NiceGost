@@ -12,12 +12,12 @@ AD_URLS = [
 
 LIST_URLS = [
     "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/ProxyGFWlist.json",
-    "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/AI.json",
-    "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/Github.json",
-    "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/Spotify.json",
-    "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/TikTok.json",
-    "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/YouTube.json",
     "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/Telegram.json",
+    "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/Ruleset/AI.json",
+    "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/Ruleset/Github.json",
+    "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/Ruleset/Spotify.json",
+    "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/Ruleset/TikTok.json",
+    "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/Ruleset/YouTube.json",
 ]
 
 def download(url):
