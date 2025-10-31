@@ -6,7 +6,6 @@ AD_URLS = [
     "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/BanAD.json",
     "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/BanProgramAD.json",
     "https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/ACL4SSR/BanADCompany.json",
-    "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksingbox.json",
 ]
 
 LIST_URLS = [
