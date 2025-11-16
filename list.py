@@ -143,10 +143,10 @@ if __name__ == "__main__":
     with open("list.json", "w", encoding="utf-8") as f:
         json.dump(list_merged, f, ensure_ascii=False, indent=2)
 
-    print("======")
+    print("===ads===")
     for k, v in ads_merged["rules"][0].items():
         print(f" {k}: {len(v)} ")
 
-    print("\n=== ===")
+    print("\n===list===")
     for k, v in list_merged["rules"][0].items():
         print(f" {k}: {len(v)} ")
