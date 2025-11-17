@@ -44,6 +44,7 @@ AI_LOCAL_JSON = {
         "arkoselabs.com",
         "auth0.com",
         "browser-intake-datadoghq.com",
+        "challenges.cloudflare.com",
         "chat.com",
         "chatgpt.com",
         "fastly.net",
@@ -51,7 +52,10 @@ AI_LOCAL_JSON = {
         "featuregates.org",
         "gpt3sandbox.com",
         "gravatar.com",
+        "grok.com",
+        "grokipedia.com",
         "i0.wp.com",
+        "immersivetranslate.com",
         "identrust.com",
         "intercom.io",
         "intercomcdn.com",
@@ -77,6 +81,7 @@ AI_LOCAL_JSON = {
         "statsigapi.net",
         "statsigcdn.com",
         "stripe.com",
+        "x.ai",
         "withpersona.com"
       ],
       "domain_keyword": [
