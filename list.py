@@ -21,74 +21,76 @@ LIST_URLS = [
 ]
 
 AI_LOCAL_JSON = {
-    "version": 3,
-    "rules": [
-        {
-            "domain_keyword": [
-                "anthropic",
-                "claude",
-                "openai"
-            ],
-            "domain": [
-                "ai.google.dev",
-                "aistudio.google.com",
-                "api.githubcopilot.com",
-                "api.groq.com",
-                "api.together.xyz",
-                "bard.google.com",
-                "console.groq.com",
-                "copilot-proxy.githubusercontent.com",
-                "gemini.google.com",
-                "generativelanguage.googleapis.com",
-                "sydney.bing.com"
-            ],
-            "domain_suffix": [
-                "ai.com",
-                "algolia.net",
-                "api.statsig.com",
-                "auth0.com",
-                "browser-intake-datadoghq.com",
-                "cdn.auth0.com",
-                "chat.com",
-                "chat.openai.com.cdn.cloudflare.net",
-                "chatgpt.com",
-                "chatgpt.livekit.cloud",
-                "client-api.arkoselabs.com",
-                "events.statsigapi.net",
-                "fastly.net",
-                "featuregates.org",
-                "gpt3sandbox.com",
-                "gravatar.com",
-                "host.livekit.cloud",
-                "i0.wp.com",
-                "identrust.com",
-                "intercom.io",
-                "intercomcdn.com",
-                "jsdelivr.net",
-                "launchdarkly.com",
-                "livekit.cloud",
-                "oaistatic.com",
-                "oaiusercontent.com",
-                "observeit.net",
-                "openai.com",
-                "openai.com.cdn.cloudflare.net",
-                "openai-api.arkoselabs.com",
-                "openaiapi-site.azureedge.net",
-                "openaicom.imgix.net",
-                "openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net",
-                "openaicomproductionae4b.blob.core.windows.net",
-                "production-openaicom-storage.azureedge.net",
-                "segment.io",
-                "sentry.io",
-                "sora.com",
-                "static.cloudflareinsights.com",
-                "statsigapi.net",
-                "stripe.com",
-                "turn.livekit.cloud",
-                "livekit.cloud"
-            ]
-        }
-    ]
+  "version": 3,
+  "rules": [
+    {
+      "domain": [
+        "ai.google.dev",
+        "aistudio.google.com",
+        "api.githubcopilot.com",
+        "api.groq.com",
+        "api.together.xyz",
+        "bard.google.com",
+        "console.groq.com",
+        "copilot-proxy.githubusercontent.com",
+        "gemini.google.com",
+        "generativelanguage.googleapis.com",
+        "sydney.bing.com"
+      ],
+      "domain_suffix": [
+        "a.nel.cloudflare.com",
+        "ai.com",
+        "algolia.net",
+        "arkoselabs.com",
+        "auth0.com",
+        "browser-intake-datadoghq.com",
+        "chat.com",
+        "chatgpt.com",
+        "fastly.net",
+        "featureassets.org",
+        "featuregates.org",
+        "gpt3sandbox.com",
+        "gravatar.com",
+        "i0.wp.com",
+        "identrust.com",
+        "intercom.io",
+        "intercomcdn.com",
+        "jsdelivr.net",
+        "launchdarkly.com",
+        "livekit.cloud",
+        "oaistatic.com",
+        "oaiusercontent.com",
+        "observeit.net",
+        "openai.com",
+        "openai.com.cdn.cloudflare.net",
+        "openaiapi-site.azureedge.net",
+        "openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net",
+        "openaicom.imgix.net",
+        "openaicomproductionae4b.blob.core.windows.net",
+        "prodregistryv2.org",
+        "production-openaicom-storage.azureedge.net",
+        "segment.io",
+        "sentry.io",
+        "sora.com",
+        "static.cloudflareinsights.com",
+        "statsig.com",
+        "statsigapi.net",
+        "statsigcdn.com",
+        "stripe.com",
+        "withpersona.com"
+      ],
+      "domain_keyword": [
+        "anthropic",
+        "chatgpt",
+        "claude",
+        "openai"
+      ],
+      "ip_cidr": [
+        "24.199.123.28/32",
+        "64.23.132.171/32"
+      ]
+    }
+  ]
 }
 
 def download(url):
