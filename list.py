@@ -33,6 +33,8 @@ AI_LOCAL_JSON = {
         "bard.google.com",
         "challenges.cloudflare.com",
         "console.groq.com",
+        "ping0.cc",
+        "openwrt.ai",
         "copilot-proxy.githubusercontent.com",
         "gemini.google.com",
         "generativelanguage.googleapis.com",
