@@ -7,7 +7,7 @@ on:
 
 jobs:
   run_script:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     name: Run
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -16,10 +16,10 @@ jobs:
           
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v6.0.1
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6.2.0
         with:
           go-version: 'stable'
 
