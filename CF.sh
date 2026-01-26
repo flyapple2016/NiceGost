@@ -3,8 +3,8 @@
 sudo apt-get update > /dev/null 2>&1
 sudo apt-get install curl mmdb-bin wget python3 > /dev/null 2>&1
 
-wget https://github.com/SagerNet/sing-box/releases/download/v1.12.12/sing-box_1.12.12_linux_amd64.deb > /dev/null 2>&1
-sudo dpkg -i sing-box_1.12.12_linux_amd64.deb > /dev/null 2>&1
+wget https://github.com/SagerNet/sing-box/releases/download/v1.12.17/sing-box_1.12.17_linux_amd64.deb > /dev/null 2>&1
+sudo dpkg -i sing-box_1.12.17_linux_amd64.deb > /dev/null 2>&1
 curl -L -o GeoLite2-Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb > /dev/null 2>&1
 python3 list.py
 sleep 15
