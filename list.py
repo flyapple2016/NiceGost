@@ -465,7 +465,6 @@ def parse_blocklist_txt(url):
                     domain = line[6:-2]
                     domains.add(domain)
                 elif line.startswith('||') and line.endswith('^'):
-
                     domain = line[2:-1]
                     domains.add(domain)
                 elif line.startswith('||') and line.endswith('/'):
@@ -474,6 +473,8 @@ def parse_blocklist_txt(url):
                 elif '.' in line and not line.startswith(('http', '*', '|', '!')):
                     domains.add(line)
     except Exception as e:
+        print(f"Error fetching {url}: {e}")
+        return sorted(domains)
     return sorted(domains)
 
 def get_ad_extra_domains():
