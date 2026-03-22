@@ -35,6 +35,7 @@ AI_LOCAL_JSON = {
         "console.groq.com",
         "ping0.cc",
         "openwrt.ai",
+        "apkpure.com",
         "copilot-proxy.githubusercontent.com",
         "gemini.google.com",
         "generativelanguage.googleapis.com",
