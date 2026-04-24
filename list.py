@@ -446,8 +446,9 @@ def download(url):
     try:
         with urllib.request.urlopen(url) as resp:
             return json.load(resp)
-    except Exception as e:
+    except Exception:
         return None
+
 
 def parse_blocklist_txt(url):
     domains = set()
@@ -459,25 +460,39 @@ def parse_blocklist_txt(url):
                 if not line or line.startswith(('!', '[', '#')):
                     continue
                 if line.startswith('*://*.') and line.endswith('/*'):
-                    domain = line[6:-2]
-                    domains.add(domain)
+                    domains.add(line[6:-2])
                 elif line.startswith('||') and line.endswith('^'):
-                    domain = line[2:-1]
-                    domains.add(domain)
+                    domains.add(line[2:-1])
                 elif line.startswith('||') and line.endswith('/'):
-                    domain = line[2:-1]
-                    domains.add(domain)
+                    domains.add(line[2:-1])
                 elif '.' in line and not line.startswith(('http', '*', '|', '!')):
                     domains.add(line)
     except Exception as e:
         print(f"Error fetching {url}: {e}")
-        return sorted(domains)
     return sorted(domains)
+
+
+def parse_surge_domain_suffix(url):
+    domains = set()
+    try:
+        with urllib.request.urlopen(url) as resp:
+            content = resp.read().decode('utf-8', errors='ignore')
+            for line in content.splitlines():
+                line = line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                if line.startswith("DOMAIN-SUFFIX,"):
+                    domain = line.split(",", 1)[1]
+                    domains.add(domain)
+    except Exception as e:
+        print(f"Error fetching {url}: {e}")
+    return sorted(domains)
+
 
 def get_ad_extra_domains():
     BLOCKLIST_TXT_URL = "https://raw.githubusercontent.com/obgnail/chinese-internet-is-dead/master/blocklist.txt"
-    extra_suffix = parse_blocklist_txt(BLOCKLIST_TXT_URL)
-    return extra_suffix
+    return parse_blocklist_txt(BLOCKLIST_TXT_URL)
+
 
 def merge_rules(urls, extra_local_data=None, extra_domains=None):
     merged = {
@@ -486,7 +501,7 @@ def merge_rules(urls, extra_local_data=None, extra_domains=None):
         "domain": set(),
         "ip_cidr": set(),
     }
-    
+
     for url in urls:
         data = download(url)
         if data is None:
@@ -495,40 +510,61 @@ def merge_rules(urls, extra_local_data=None, extra_domains=None):
             for key in merged:
                 if key in rule:
                     merged[key].update(rule[key])
-    
+
     if extra_local_data:
         for rule in extra_local_data.get("rules", []):
             for key in merged:
                 if key in rule:
                     merged[key].update(rule[key])
-    
+
     if extra_domains:
         merged["domain_suffix"].update(extra_domains)
-    
+
     result = {"version": 3, "rules": [{}]}
     obj = result["rules"][0]
+
     for key in merged:
         items = sorted(merged[key])
         if items:
             obj[key] = items
-            
+
     return result
 
+
 if __name__ == "__main__":
+
+    GFW_TXT_URL = "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/gfw.txt"
+    REJECT_TXT_URL = "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/reject.txt"
+
+    gfw_domains = parse_surge_domain_suffix(GFW_TXT_URL)
+    reject_domains = parse_surge_domain_suffix(REJECT_TXT_URL)
+
+
     extra_ad_domains = get_ad_extra_domains()
-    ads_merged = merge_rules(AD_URLS, extra_local_data=AD_LOCAL_JSON, extra_domains=extra_ad_domains)
-    
+    all_ad_domains = list(set(extra_ad_domains) | set(reject_domains))
+
+    ads_merged = merge_rules(
+        AD_URLS,
+        extra_local_data=AD_LOCAL_JSON,
+        extra_domains=all_ad_domains
+    )
+
     with open("ads.json", "w", encoding="utf-8") as f:
         json.dump(ads_merged, f, ensure_ascii=False, indent=2)
-    
-    list_merged = merge_rules(LIST_URLS, extra_local_data=AI_LOCAL_JSON)
+
+    list_merged = merge_rules(
+        LIST_URLS,
+        extra_local_data=AI_LOCAL_JSON,
+        extra_domains=gfw_domains
+    )
+
     with open("list.json", "w", encoding="utf-8") as f:
         json.dump(list_merged, f, ensure_ascii=False, indent=2)
-    
+
     print("===ads===")
     for k, v in ads_merged["rules"][0].items():
         print(f" {k}: {len(v)} ")
-    
+
     print("\n===list===")
     for k, v in list_merged["rules"][0].items():
         print(f" {k}: {len(v)} ")
