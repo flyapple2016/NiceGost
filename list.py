@@ -54,6 +54,7 @@ AI_LOCAL_JSON = {
         "groq.com",
         "grokipedia.com",
         "i0.wp.com",
+        "immortalwrt.org",
         "immersivetranslate.com",
         "identrust.com",
         "intercom.io",
