@@ -15,8 +15,8 @@ download_compile_upload() {
   unzip "$latest_version.zip"
   cd "cloudflared-$latest_version"
 
-  CGO_ENABLED=0 go build -o nicegost-amd -trimpath -ldflags "-s -w -buildid=" ./cmd/cloudflared
-  GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o nicegost-arm -trimpath -ldflags "-s -w -buildid=" ./cmd/cloudflared
+  CGO_ENABLED=0 go build -o nicegost-amd -buildvcs=false -trimpath -ldflags "-s -w -buildid=" ./cmd/cloudflared
+  GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o nicegost-arm -buildvcs=false -trimpath -ldflags "-s -w -buildid=" ./cmd/cloudflared
 
   sudo chmod a+x nicegost-amd nicegost-arm
   upx nicegost-amd nicegost-arm
@@ -30,7 +30,7 @@ build_deb_package() {
   PACKAGE_NAME="NiceGost"
   PACKAGE_VERSION="$latest_version"
   MAINTAINER="NiceGost <NiceGost@email.com>"
-  DESCRIPTION="NiceGost 2025"
+  DESCRIPTION="NiceGost 2026"
 
   mv nicegost-arm nicegost
 
