@@ -87,6 +87,8 @@ AI_LOCAL_JSON = {
         "anthropic",
         "chatgpt",
         "claude",
+        "openaiapi",
+        "openaipublic",
         "openai"
       ],
       "ip_cidr": [
