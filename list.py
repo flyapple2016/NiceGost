@@ -35,7 +35,7 @@ AI_LOCAL_JSON = {
         "live.com",
         "massgrave.dev",
         "together.xyz",
-        "apkpure.com",
+        "github.dev",
         "ping0.cc",
         "openwrt.ai",
         "algolia.net",
