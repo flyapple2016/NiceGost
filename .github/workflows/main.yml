@@ -12,8 +12,6 @@ jobs:
     name: Run
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           
     steps:
       - name: Checkout Repository
@@ -27,7 +25,7 @@ jobs:
       - name: Run NiceGost Update
         run: |
           sudo chmod +x NiceGost.sh
-          ./NiceGost.sh TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }} TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
+          ./NiceGost.sh
   
       - name: Check for nicegost
         run: |
