@@ -1,1 +1,1 @@
-Latest Version: 2026.9.1
+Latest Version: 2026.9.3
